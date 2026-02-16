@@ -29,7 +29,7 @@ async function connectDB() {
 
 // ===== CORS Policy =====
 const corsPolicy = {
-  origin: true,
+  origin: "https://blogging-app-blog-hub.vercel.app",
   credentials: true,
 };
 
