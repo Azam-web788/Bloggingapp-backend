@@ -87,15 +87,17 @@ const Login = async function (req , res) {
         console.log("incorrect password");
         return
     }
-    const token = jwt.sign({ FirstName: user.firstname , kastName : user.lastname ,image : user.image ,  Email : user.email , Password : user.password , PhoneNumber : user.phonenumber  , id : user._id }, process.env.JWT_SECRET);
+    const token = jwt.sign({ FirstName: user.firstname , image : user.image ,  Email : user.email ,  id : user._id }, process.env.JWT_SECRET);
     res.cookie("token" , token , {
         httpOnly : true,
-        secure : true,
+        secure: process.env.NODE_ENV === "production",
         sameSite : "none",
         maxAge: 7 * 24 * 60 * 60 * 1000
-    }).status(200).json({
+    });
+    res.status(200).json({
         message : "user login successfully",
         user,
+        token,
         success : true
     })
  } catch (err) {
